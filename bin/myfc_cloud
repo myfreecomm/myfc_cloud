@@ -3,9 +3,9 @@
 # 1.9 adds realpath to resolve symlinks; 1.8 doesn't
 # have this method, so we add it so we get resolved symlinks
 # and compatibility
-unless File.respond_to? :realpath
+unless File.respond_to?(:realpath)
   class File #:nodoc:
-    def self.realpath path
+    def self.realpath(path)
       return realpath(File.readlink(path)) if symlink?(path)
       path
     end
@@ -24,32 +24,27 @@ program_desc 'Command line application to deploy and manage webapps on Amazon We
 
 version MyfcCloud::VERSION
 
-desc 'Targets the production environment'
-switch [:P,:production]
-
 desc 'Targets the sandbox environment (default)'
 switch [:S,:sandbox]
 
+desc 'Targets the production environment'
+switch [:P,:production]
+
+desc 'Targets the stage environment'
+switch [:T,:stage]
+
 desc 'Path to the configuration file'
-default_value './myfc_cloud.yml'
+default_value File.join(File.expand_path('..', File.dirname(__FILE__)), 'myfc_cloud.yml')
 arg_name 'PATH_TO_CONFIG_FILE'
 flag [:C,:'config-file']
 
 desc 'Checks if all required configuration is properly set and all requirements are met'
-# arg_name 'Describe arguments to check here'
 command :check do |c|
-  # c.desc 'Describe a switch to check'
-  # c.switch :s
-
-  # c.desc 'Describe a flag to check'
-  # c.default_value 'default'
-  # c.flag :f
-
   c.action do |global_options,options,args|
     # Your command logic here
-
     # If you have any errors, just raise them
     # raise "that command made no sense"
+    MyfcCloud::Commands::Check.new(global_options[:configuration]).run
   end
 end
 
@@ -58,27 +53,29 @@ desc 'Deploys your application to the selected environment'
 command :deploy do |c|
   c.desc 'To set the application in maintenance mode during deploy or not'
   c.default_value 'false'
-  c.arg_name 'boolean'
+  c.arg_name 'false|true'
   c.flag :maintenance
 
   c.action do |global_options,options,args|
-    # Your command logic here
-
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
+    MyfcCloud::Commands::Deploy.new(
+      global_options[:configuration],
+      :maintenance => options[:maintenance]
+    ).run
   end
 end
 
-pre do |global,command,options,args|
+pre do |global_options,command,options,args|
   # Pre logic here
   # Return true to proceed; false to abort and not call the
   # chosen command
   # Use skips_pre before a command to skip this block
   # on that command only
+
+  global_options[:configuration] = MyfcCloud::Configuration.new(global_options[:C])
   true
 end
 
-post do |global,command,options,args|
+post do |global_options,command,options,args|
   # Post logic here
   # Use skips_post before a command to skip this
   # block on that command only
