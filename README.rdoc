@@ -1,0 +1,6 @@
+= myfc_cloud
+
+Command line application to deploy and manage webapps on Amazon Web Services.
+
+:include:myfc_cloud.rdoc
+

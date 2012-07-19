@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+
+# 1.9 adds realpath to resolve symlinks; 1.8 doesn't
+# have this method, so we add it so we get resolved symlinks
+# and compatibility
+unless File.respond_to? :realpath
+  class File #:nodoc:
+    def self.realpath path
+      return realpath(File.readlink(path)) if symlink?(path)
+      path
+    end
+  end
+end
+
+$: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
+
+require 'rubygems'
+require 'gli'
+require 'myfc_cloud'
+
+include GLI
+
+program_desc 'Command line application to deploy and manage webapps on Amazon Web Services'
+
+version MyfcCloud::VERSION
+
+desc 'Targets the production environment'
+switch [:P,:production]
+
+desc 'Targets the sandbox environment (default)'
+switch [:S,:sandbox]
+
+desc 'Path to the configuration file'
+default_value './myfc_cloud.yml'
+arg_name 'PATH_TO_CONFIG_FILE'
+flag [:C,:'config-file']
+
+desc 'Checks if all required configuration is properly set and all requirements are met'
+# arg_name 'Describe arguments to check here'
+command :check do |c|
+  # c.desc 'Describe a switch to check'
+  # c.switch :s
+
+  # c.desc 'Describe a flag to check'
+  # c.default_value 'default'
+  # c.flag :f
+
+  c.action do |global_options,options,args|
+    # Your command logic here
+
+    # If you have any errors, just raise them
+    # raise "that command made no sense"
+  end
+end
+
+desc 'Deploys your application to the selected environment'
+# arg_name 'Describe arguments to deploy here'
+command :deploy do |c|
+  c.desc 'To set the application in maintenance mode during deploy or not'
+  c.default_value 'false'
+  c.arg_name 'boolean'
+  c.flag :maintenance
+
+  c.action do |global_options,options,args|
+    # Your command logic here
+
+    # If you have any errors, just raise them
+    # raise "that command made no sense"
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+exit GLI.run(ARGV)

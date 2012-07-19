@@ -1,0 +1,5 @@
+= myfc_cloud
+
+Generate this with
+    myfc_cloud rdoc
+After you have described your command line interface
