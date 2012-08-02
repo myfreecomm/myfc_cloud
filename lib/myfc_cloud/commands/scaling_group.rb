@@ -9,7 +9,6 @@ module MyfcCloud
 
       # TOSPEC
       def info
-        check_existence!
         {
           :name => scaling_group.name,
           :min_size => scaling_group.min_size,
@@ -26,7 +25,6 @@ module MyfcCloud
 
       # TOSPEC
       def freeze(size=nil)
-        check_existence!
         size = scaling_group.desired_capacity if size.blank?
         scaling_group.update(
           :min_size => size,
@@ -38,16 +36,13 @@ module MyfcCloud
 
       # TOSPEC
       def check
-        check_existence!
         asg_instances = scaling_group.auto_scaling_instances
         !asg_instances.empty? &&
           asg_instances.map(&:health_status).uniq == ["HEALTHY"] &&
           asg_instances.map(&:lifecycle_state).uniq == ["InService"]
       end
 
-      # TOSPEC (just the aws connection)
       def update(options={})
-        check_existence!
         options.symbolize_keys!
         clean_options = {}.tap do |hash|
           hash[:min_size] = options[:min_size].to_i unless options[:min_size].blank?
@@ -63,14 +58,13 @@ module MyfcCloud
       private
 
       def scaling_group
-        @scaling_group ||= AWS::AutoScaling.new(
+        return @scaling_group unless @scaling_group.nil?
+        @scaling_group = AWS::AutoScaling.new(
           :access_key_id => @configuration.access_key_id,
           :secret_access_key => @configuration.secret_access_key
         ).groups[@configuration.auto_scaling_group_name]
-      end
-
-      def check_existence!
-        raise "AutoScalingGroup named '#{@configuration.auto_scaling_group_name}' does not exist" unless scaling_group.exists?
+        raise "AutoScalingGroup named '#{@configuration.auto_scaling_group_name}' does not exist" unless @scaling_group.exists?
+        @scaling_group
       end
 
     end
