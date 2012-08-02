@@ -73,9 +73,9 @@ command 'scaling_group:info' do |c|
   end
 end
 
-desc "'Freezes' your Auto Scaling Group"
+desc "'Freezes' your ASG"
 long_desc <<-EOS
-Updates the ASG causing it to not increment or decrement the number of instances no matter what happens. In effect, sets the min_size, max_size and desired_capacity to the same value. By default sets them to the current desired_capacity, but you can pass a size flag to specify the number of instances you want.
+Updates the Auto Scaling Group causing it to not increment or decrement the number of instances no matter what happens. In effect, sets the min_size, max_size and desired_capacity to the same value. By default sets them to the current desired_capacity, but you can pass a size flag to specify the number of instances you want.
 EOS
 command 'scaling_group:freeze' do |c|
   c.desc 'the number of instances to freeze with (defaults to the current desired_capacity)'
@@ -86,6 +86,18 @@ command 'scaling_group:freeze' do |c|
     pp MyfcCloud::Commands::ScalingGroup.new(
       global_options[:configuration]
     ).freeze(options[:size])
+  end
+end
+
+desc "Checks if all instances are InService AND Healthy on your ASG"
+long_desc <<-EOS
+Returns true if all instances registered on your Auto Scaling Group are currently InService and Healthy.
+EOS
+command 'scaling_group:check' do |c|
+  c.action do |global_options,options,args|
+    pp MyfcCloud::Commands::ScalingGroup.new(
+      global_options[:configuration]
+    ).check
   end
 end
 

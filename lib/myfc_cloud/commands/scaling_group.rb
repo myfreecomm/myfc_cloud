@@ -9,7 +9,7 @@ module MyfcCloud
 
       # TOSPEC
       def info
-        raise "AutoScalingGroup named '#{scaling_group.name}' does not exist" unless scaling_group.exists?
+        check_existence
         {
           :name => scaling_group.name,
           :min_size => scaling_group.min_size,
@@ -26,6 +26,7 @@ module MyfcCloud
 
       # TOSPEC
       def freeze(size=nil)
+        check_existence
         size = scaling_group.desired_capacity if size.blank?
         scaling_group.update(
           :min_size => size,
@@ -35,6 +36,15 @@ module MyfcCloud
         size
       end
 
+      # TOSPEC
+      def check
+        check_existence
+        asg_instances = scaling_group.auto_scaling_instances
+        !asg_instances.empty? &&
+          asg_instances.map(&:health_status).uniq == ["HEALTHY"] &&
+          asg_instances.map(&:lifecycle_state).uniq == ["InService"]
+      end
+
       private
 
       def scaling_group
@@ -42,6 +52,10 @@ module MyfcCloud
           :access_key_id => @configuration.access_key_id,
           :secret_access_key => @configuration.secret_access_key
         ).groups[@configuration.auto_scaling_group_name]
+      end
+
+      def check_existence
+        raise "AutoScalingGroup named '#{scaling_group.name}' does not exist" unless scaling_group.exists?
       end
 
     end
