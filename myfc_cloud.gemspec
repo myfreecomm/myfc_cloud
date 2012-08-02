@@ -36,6 +36,11 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
   s.add_development_dependency('rspec', '~> 2.11')
+  s.add_development_dependency('pry', '~> 0.9')
+  s.add_development_dependency('pry-nav', '~> 0.2')
+  s.add_development_dependency('pry-doc', '~> 0.4')
+  s.add_development_dependency('pry-remote', '~> 0.1')
+  s.add_development_dependency('awesome_print', '~> 1.0')
 
   s.add_runtime_dependency('gli', '~> 1.6')
   s.add_runtime_dependency('aws-sdk', '~> 1.6')

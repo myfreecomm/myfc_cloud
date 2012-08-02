@@ -1,0 +1,19 @@
+---
+production:
+  auto_scaling_group_name: production_asg
+  elastic_load_balancer_name: production_elb
+  rds_instance_identifier: production_rds
+  app_path_on_server: /path/to/production/app/src
+sandbox:
+  access_key_id:
+  secret_access_key:
+  auto_scaling_group_name: sandbox_asg
+  elastic_load_balancer_name: sandbox_elb
+  rds_instance_identifier: sandbox_rds
+  app_path_on_server: /path/to/sandbox/app/src
+stage:
+  access_key_id: STAGE_ACCESS_KEY_ID
+  auto_scaling_group_name: stage_asg
+  elastic_load_balancer_name: stage_elb
+  rds_instance_identifier: stage_rds
+  app_path_on_server: /path/to/stage/app/src
