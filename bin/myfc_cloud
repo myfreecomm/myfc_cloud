@@ -101,6 +101,34 @@ command 'scaling_group:check' do |c|
   end
 end
 
+desc "Updates some attributes of your ASG"
+long_desc <<-EOS
+Updates the Auto Scaling Group's min_size, max_size, desired_capacity and launch_configuration, either one at a time or all together.
+EOS
+command 'scaling_group:update' do |c|
+  c.desc 'minimum number of instances'
+  c.arg_name 'integer'
+  c.flag :min_size
+
+  c.desc 'maximum number of instances'
+  c.arg_name 'integer'
+  c.flag :max_size
+
+  c.desc 'desired number of active instances'
+  c.arg_name 'integer'
+  c.flag :desired_capacity
+
+  c.desc 'launch configuration name'
+  c.arg_name 'string'
+  c.flag :launch_configuration
+
+  c.action do |global_options,options,args|
+    pp MyfcCloud::Commands::ScalingGroup.new(
+      global_options[:configuration]
+    ).update(options)
+  end
+end
+
 
 pre do |global_options,command,options,args|
   # Pre logic here
