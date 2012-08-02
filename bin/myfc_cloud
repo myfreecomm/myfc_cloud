@@ -37,9 +37,10 @@ switch [:T,:stage]
 desc 'Path to the configuration file'
 default_value File.join(File.expand_path('..', File.dirname(__FILE__)), 'myfc_cloud.yml')
 arg_name 'PATH_TO_CONFIG_FILE'
-flag [:C,:'config-file']
+flag [:C,:config_file]
 
 desc 'Checks if all required configuration is properly set and all requirements are met'
+skips_pre
 command 'check' do |c|
   c.action do |global_options,options,args|
     # Your command logic here
