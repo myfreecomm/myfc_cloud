@@ -70,7 +70,7 @@ module MyfcCloud
       end
 
       def check_existence!
-        raise "AutoScalingGroup named '#{scaling_group.name}' does not exist" unless scaling_group.exists?
+        raise "AutoScalingGroup named '#{@configuration.auto_scaling_group_name}' does not exist" unless scaling_group.exists?
       end
 
     end
