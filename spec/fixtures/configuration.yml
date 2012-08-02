@@ -1,0 +1,12 @@
+---
+production:
+  foo: bar
+  arr:
+    - 1
+    - :two
+    - three
+    - 4.0
+  nulo:
+sandbox:
+  spam: eggs
+  arr: []
