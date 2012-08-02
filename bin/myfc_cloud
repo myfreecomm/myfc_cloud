@@ -83,7 +83,9 @@ command 'scaling_group:freeze' do |c|
   c.flag :size
 
   c.action do |global_options,options,args|
-    puts "Not implemented #{options[:size]}"
+    pp MyfcCloud::Commands::ScalingGroup.new(
+      global_options[:configuration]
+    ).freeze(options[:size])
   end
 end
 

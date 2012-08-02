@@ -9,3 +9,9 @@ require File.join(File.dirname(__FILE__), "myfc_cloud/commands")
 module MyfcCloud
 
 end
+
+class Object
+  def blank?
+    respond_to?(:empty?) ? empty? : !self
+  end
+end

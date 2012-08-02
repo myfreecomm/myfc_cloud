@@ -9,12 +9,7 @@ module MyfcCloud
 
       # TOSPEC
       def info
-        scaling_group = AWS::AutoScaling.new(
-          :access_key_id => @configuration.access_key_id,
-          :secret_access_key => @configuration.secret_access_key
-        ).groups[@configuration.auto_scaling_group_name]
         raise "AutoScalingGroup named '#{scaling_group.name}' does not exist" unless scaling_group.exists?
-
         {
           :name => scaling_group.name,
           :min_size => scaling_group.min_size,
@@ -27,6 +22,26 @@ module MyfcCloud
           :load_balancers => scaling_group.load_balancer_names,
           :tags => scaling_group.tags,
         }
+      end
+
+      # TOSPEC
+      def freeze(size=nil)
+        size = scaling_group.desired_capacity if size.blank?
+        scaling_group.update(
+          :min_size => size,
+          :max_size => size,
+          :desired_capacity => size
+        )
+        size
+      end
+
+      private
+
+      def scaling_group
+        @scaling_group ||= AWS::AutoScaling.new(
+          :access_key_id => @configuration.access_key_id,
+          :secret_access_key => @configuration.secret_access_key
+        ).groups[@configuration.auto_scaling_group_name]
       end
 
     end
