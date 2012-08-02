@@ -13,12 +13,12 @@ describe MyfcCloud::Configuration do
       }.not_to raise_error
 
       configuration.config.instance_variable_get(:@table).should == {
-        access_key_id: 'SANDBOX_ACCESS_KEY_ID',
-        secret_access_key: 'SANDBOX_SECRET_ACCESS_KEY',
-        auto_scaling_group_name: 'sandbox_asg',
-        elastic_load_balancer_name: 'sandbox_elb',
-        rds_instance_identifier: 'sandbox_rds',
-        app_path_on_server: '/path/to/sandbox/app/src',
+        :access_key_id => 'SANDBOX_ACCESS_KEY_ID',
+        :secret_access_key => 'SANDBOX_SECRET_ACCESS_KEY',
+        :auto_scaling_group_name => 'sandbox_asg',
+        :elastic_load_balancer_name => 'sandbox_elb',
+        :rds_instance_identifier => 'sandbox_rds',
+        :app_path_on_server => '/path/to/sandbox/app/src',
       }
     end
     it "should load the config from the Yaml file given it's path and environment" do
@@ -28,12 +28,12 @@ describe MyfcCloud::Configuration do
       }.not_to raise_error
 
       configuration.config.instance_variable_get(:@table).should == {
-        access_key_id: 'PRODUCTION_ACCESS_KEY_ID',
-        secret_access_key: 'PRODUCTION_SECRET_ACCESS_KEY',
-        auto_scaling_group_name: 'production_asg',
-        elastic_load_balancer_name: 'production_elb',
-        rds_instance_identifier: 'production_rds',
-        app_path_on_server: '/path/to/production/app/src',
+        :access_key_id => 'PRODUCTION_ACCESS_KEY_ID',
+        :secret_access_key => 'PRODUCTION_SECRET_ACCESS_KEY',
+        :auto_scaling_group_name => 'production_asg',
+        :elastic_load_balancer_name => 'production_elb',
+        :rds_instance_identifier => 'production_rds',
+        :app_path_on_server => '/path/to/production/app/src',
       }
     end
     it "should raise an error if the environment is not found" do
