@@ -138,7 +138,11 @@ pre do |global_options,command,options,args|
   # Use skips_pre before a command to skip this block
   # on that command only
 
-  global_options[:configuration] = MyfcCloud::Configuration.new(global_options[:C])
+  environment = :sandbox
+  environment = :production if global_options[:P] || global_options[:production]
+  environment = :stage if global_options[:T] || global_options[:stage]
+
+  global_options[:configuration] = MyfcCloud::Configuration.new(global_options[:C], environment)
   true
 end
 
