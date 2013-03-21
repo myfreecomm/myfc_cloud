@@ -17,7 +17,7 @@ $: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
 require 'rubygems'
 require 'gli'
 require 'myfc_cloud'
-require 'pp'
+require 'awesome_print'
 
 include GLI::App
 
@@ -68,7 +68,7 @@ end
 desc 'Lists information about your Auto Scaling Group'
 command 'scaling_group:info' do |c|
   c.action do |global_options,options,args|
-    pp MyfcCloud::Commands::ScalingGroup.new(
+    ap MyfcCloud::Commands::ScalingGroup.new(
       global_options[:configuration]
     ).info
   end
@@ -84,7 +84,7 @@ command 'scaling_group:freeze' do |c|
   c.flag :size
 
   c.action do |global_options,options,args|
-    pp MyfcCloud::Commands::ScalingGroup.new(
+    ap MyfcCloud::Commands::ScalingGroup.new(
       global_options[:configuration]
     ).freeze(options[:size])
   end
@@ -96,7 +96,7 @@ Returns true if all instances registered on your Auto Scaling Group are currentl
 EOS
 command 'scaling_group:check' do |c|
   c.action do |global_options,options,args|
-    pp MyfcCloud::Commands::ScalingGroup.new(
+    ap MyfcCloud::Commands::ScalingGroup.new(
       global_options[:configuration]
     ).check
   end
@@ -124,7 +124,7 @@ command 'scaling_group:update' do |c|
   c.flag :launch_configuration
 
   c.action do |global_options,options,args|
-    pp MyfcCloud::Commands::ScalingGroup.new(
+    ap MyfcCloud::Commands::ScalingGroup.new(
       global_options[:configuration]
     ).update(options)
   end

@@ -25,8 +25,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.bindir = 'bin'
 
-  spec.add_runtime_dependency 'gli', '~> 2.5.5'
-  spec.add_runtime_dependency 'aws-sdk', '~> 1.8.5'
+  spec.add_dependency 'gli', '~> 2.5.5'
+  spec.add_dependency 'aws-sdk', '~> 1.8.5'
+  spec.add_dependency 'awesome_print', '~> 1.1.0'
 
   spec.add_development_dependency 'bundler', '~> 1.3.2'
   spec.add_development_dependency 'rake', '~> 10.0.3'
@@ -36,7 +37,6 @@ Gem::Specification.new do |spec|
   # spec.add_development_dependency 'webmock', '~> 1.9.3'
   spec.add_development_dependency 'pry', '~> 0.9.12'
   spec.add_development_dependency 'pry-nav', '~> 0.2.3'
-  spec.add_development_dependency 'awesome_print', '~> 1.1.0'
   spec.add_development_dependency 'simplecov', '~> 0.7.1'
   spec.add_development_dependency 'coveralls', '~> 0.6.3'
 end
