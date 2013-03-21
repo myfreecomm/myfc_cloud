@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Command line application to deploy and manage webapps on Amazon Web Services'
   spec.license     = "Apache-v2"
   spec.has_rdoc    = true
-  spec.extra_rdoc_files = ['README.rdoc','myfc_cloud.rdoc']
+  spec.extra_rdoc_files = ['README.rdoc']
   spec.rdoc_options << '--title' << 'myfc_cloud' << '--main' << 'README.rdoc' << '-ri'
 
   spec.files         = `git ls-files`.split($/)
