@@ -19,6 +19,11 @@ require 'gli'
 require 'myfc_cloud'
 require 'awesome_print'
 
+AwesomePrint.defaults = {
+  :indent => 2,
+  :index => false
+}
+
 include GLI::App
 
 program_desc 'Command line application to deploy and manage webapps on Amazon Web Services'
