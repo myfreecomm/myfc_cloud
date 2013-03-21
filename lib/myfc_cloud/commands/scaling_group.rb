@@ -38,17 +38,17 @@ module MyfcCloud
       def check
         asg_instances = scaling_group.auto_scaling_instances
         !asg_instances.empty? &&
-          asg_instances.map(&:health_status).uniq == ["HEALTHY"] &&
-          asg_instances.map(&:lifecycle_state).uniq == ["InService"]
+          asg_instances.map(&:health_status).uniq.map(&:downcase) == ["healthy"] &&
+          asg_instances.map(&:lifecycle_state).uniq.map(&:downcase) == ["inservice"]
       end
 
       def update(options={})
         options.symbolize_keys!
         clean_options = {}.tap do |hash|
-          hash[:min_size] = options[:min_size].to_i unless options[:min_size].blank?
-          hash[:max_size] = options[:max_size].to_i unless options[:max_size].blank?
-          hash[:desired_capacity] = options[:desired_capacity].to_i unless options[:desired_capacity].blank?
-          hash[:launch_configuration] = options[:launch_configuration].to_s unless options[:launch_configuration].blank?
+          hash[:min_size] = Integer(options[:min_size]) unless options[:min_size].blank?
+          hash[:max_size] = Integer(options[:max_size]) unless options[:max_size].blank?
+          hash[:desired_capacity] = Integer(options[:desired_capacity]) unless options[:desired_capacity].blank?
+          hash[:launch_configuration] = String(options[:launch_configuration]) unless options[:launch_configuration].blank?
         end
         return 'no changes to be made' if clean_options.blank?
         scaling_group.update(clean_options)
@@ -58,13 +58,16 @@ module MyfcCloud
       private
 
       def scaling_group
-        return @scaling_group unless @scaling_group.nil?
-        @scaling_group = AWS::AutoScaling.new(
+        @scaling_group ||= fetch_scaling_group
+      end
+
+      def fetch_scaling_group
+        scaling_group = AWS::AutoScaling.new(
           :access_key_id => @configuration.access_key_id,
           :secret_access_key => @configuration.secret_access_key
         ).groups[@configuration.auto_scaling_group_name]
-        raise "AutoScalingGroup named '#{@configuration.auto_scaling_group_name}' does not exist" unless @scaling_group.exists?
-        @scaling_group
+        raise "AutoScalingGroup named '#{@configuration.auto_scaling_group_name}' does not exist" unless scaling_group.exists?
+        scaling_group
       end
 
     end
