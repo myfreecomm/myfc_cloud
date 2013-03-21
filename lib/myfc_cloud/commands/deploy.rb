@@ -1,6 +1,6 @@
 # encoding: utf-8
-module MyfcCloud
-  module Commands
+module MyfcCloud # :nodoc:
+  module Commands # :nodoc:
     class Deploy
 
       def initialize(configuration, options={})

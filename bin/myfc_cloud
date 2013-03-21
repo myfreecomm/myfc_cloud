@@ -4,7 +4,7 @@
 # have this method, so we add it so we get resolved symlinks
 # and compatibility
 unless File.respond_to?(:realpath)
-  class File #:nodoc:
+  class File # :nodoc:
     def self.realpath(path)
       return realpath(File.readlink(path)) if symlink?(path)
       path
@@ -24,7 +24,7 @@ AwesomePrint.defaults = {
   :index => false
 }
 
-include GLI::App
+include GLI::App # :nodoc:
 
 program_desc 'Command line application to deploy and manage webapps on Amazon Web Services'
 

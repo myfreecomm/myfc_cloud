@@ -4,4 +4,70 @@ Command line application to deploy and manage webapps on Amazon Web Services.
 
 {<img src="https://travis-ci.org/myfreecomm/myfc_cloud.png?branch=master" alt="Build Status" />}[https://travis-ci.org/myfreecomm/myfc_cloud]
 {<img src="https://coveralls.io/repos/myfreecomm/myfc_cloud/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/myfreecomm/myfc_cloud]
-{<img src="https://codeclimate.com/github/myfreecomm/myfc_cloud.png" />}[https://codeclimate.com/github/myfreecomm/myfc_cloud]
+{<img src="https://codeclimate.com/github/myfreecomm/myfc_cloud.png" alt="Code Climate Status" />}[https://codeclimate.com/github/myfreecomm/myfc_cloud]
+
+== Installation
+
+  $ gem install myfc_cloud
+
+== Usage
+
+=== Available commands
+
+  $ myfc_cloud help
+
+  NAME
+      myfc_cloud - Command line application to deploy and manage webapps on Amazon Web Services
+
+  SYNOPSIS
+      myfc_cloud [global options] command [command options] [arguments...]
+
+  VERSION
+      0.0.1
+
+  GLOBAL OPTIONS
+      -C, --config_file=PATH_TO_CONFIG_FILE - Path to the configuration file (default: ~/.myfc_cloud.yml)
+      -P, --production                      - Targets the production environment
+      -S, --sandbox                         - Targets the sandbox environment (default)
+      -T, --stage                           - Targets the stage environment
+      --help                                - Show this message
+      --version                             -
+
+  COMMANDS
+      check                - Checks if all required configuration is properly set and all requirements are met
+      deploy               - Deploys your application to the selected environment
+      help                 - Shows a list of commands or help for one command
+      scaling_group:check  - Checks if all instances are InService AND Healthy on your ASG
+      scaling_group:freeze - 'Freezes' your ASG
+      scaling_group:info   - Lists information about your Auto Scaling Group
+      scaling_group:update - Updates some attributes of your ASG
+
+=== Configuration
+
++myfc_cloud+ expects a YAML configuration file with your AWS settings, keyed by environment, like this:
+
+  production:
+    access_key_id: production_access_key_id
+    secret_access_key: production_secret_access_key
+    auto_scaling_group_name: production_asg
+    elastic_load_balancer_name: production_elb
+    rds_instance_identifier: production_rds
+    app_path_on_server: /path/to/production/app/src
+  sandbox:
+    access_key_id: sandbox_access_key_id
+    secret_access_key: sandbox_secret_access_key
+    auto_scaling_group_name: sandbox_asg
+    elastic_load_balancer_name: sandbox_elb
+    rds_instance_identifier: sandbox_rds
+    app_path_on_server: /path/to/sandbox/app/src
+  stage:
+    access_key_id: stage_access_key_id
+    secret_access_key: stage_secret_access_key
+    auto_scaling_group_name: stage_asg
+    elastic_load_balancer_name: stage_elb
+    rds_instance_identifier: stage_rds
+    app_path_on_server: /path/to/stage/app/src
+
+Optionally, you can leave out the +access_key_id+ and +secret_access_key+ information from the configuration file, and supply them as environment variables when you call the +myfc_cloud+ command, for example:
+
+  $ MYFC_CLOUD_ACCESS_KEY_ID=some-id MYFC_CLOUD_SECRET_ACCESS_KEY=some-secret myfc_cloud deploy

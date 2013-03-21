@@ -2,7 +2,7 @@
 require 'yaml'
 require 'ostruct'
 
-module MyfcCloud
+module MyfcCloud # :nodoc:
   class Configuration
 
     def initialize(filepath, environment=:sandbox)
