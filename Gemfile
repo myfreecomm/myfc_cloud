@@ -1,3 +1,5 @@
 # encoding: utf-8
-source :rubygems
+source 'https://rubygems.org'
+
+# Specify your gem's dependencies in myfc_cloud.gemspec
 gemspec

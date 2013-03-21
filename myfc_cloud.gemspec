@@ -1,47 +1,42 @@
 # encoding: utf-8
-
-# this is magic line that ensures "../lib" is in the load path
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 # Ensure we require the local version and not one we might have installed already
 require File.join([File.dirname(__FILE__),'lib','myfc_cloud','version.rb'])
 
-spec = Gem::Specification.new do |s|
-  s.name = 'myfc_cloud'
-  s.version = MyfcCloud::VERSION
-  s.authors = ['Rodrigo Tassinari de Oliveira']
-  s.email = ['rodrigo.tassinari@myfreecomm.com.br', 'rodrigo@pittlandia.net']
-  s.homepage = 'https://github.com/myfreecomm/myfc_cloud'
-  s.platform = Gem::Platform::RUBY
-  s.summary = 'Command line application to deploy and manage webapps on Amazon Web Services'
-  s.description = 'Command line application to deploy and manage webapps on Amazon Web Services'
+Gem::Specification.new do |spec|
+  spec.name        = 'myfc_cloud'
+  spec.version     = MyfcCloud::VERSION
+  spec.authors     = ['Rodrigo Tassinari de Oliveira']
+  spec.email       = ['rodrigo.tassinari@myfreecomm.com.br', 'rodrigo@pittlandia.net']
+  spec.homepage    = 'https://github.com/myfreecomm/myfc_cloud'
+  spec.platform    = Gem::Platform::RUBY
+  spec.summary     = 'Command line application to deploy and manage webapps on Amazon Web Services'
+  spec.description = 'Command line application to deploy and manage webapps on Amazon Web Services'
+  spec.license     = "Apache-v2"
+  spec.has_rdoc    = true
+  spec.extra_rdoc_files = ['README.rdoc','myfc_cloud.rdoc']
+  spec.rdoc_options << '--title' << 'myfc_cloud' << '--main' << 'README.rdoc' << '-ri'
 
-  # Add your other files here if you make them
-#   s.files = %w(
-# bin/myfc_cloud
-# lib/myfc_cloud_version.rb
-#   )
-  s.files = `git ls-files`.split("\n")
-  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+  spec.bindir = 'bin'
 
-  s.require_paths << 'lib'
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','myfc_cloud.rdoc']
-  s.rdoc_options << '--title' << 'myfc_cloud' << '--main' << 'README.rdoc' << '-ri'
-  s.bindir = 'bin'
+  spec.add_runtime_dependency 'gli', '~> 2.5.5'
+  spec.add_runtime_dependency 'aws-sdk', '~> 1.8.5'
 
-  # s.executables << 'myfc_cloud'
-  s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-
-  s.add_development_dependency('rake')
-  s.add_development_dependency('rdoc')
-  s.add_development_dependency('rspec', '~> 2.11')
-  s.add_development_dependency('pry', '~> 0.9')
-  s.add_development_dependency('pry-nav', '~> 0.2')
-  s.add_development_dependency('pry-doc', '~> 0.4')
-  s.add_development_dependency('pry-remote', '~> 0.1')
-  s.add_development_dependency('awesome_print', '~> 1.0')
-
-  s.add_runtime_dependency('gli', '~> 1.6')
-  s.add_runtime_dependency('aws-sdk', '~> 1.6')
+  spec.add_development_dependency 'bundler', '~> 1.3.4'
+  spec.add_development_dependency 'rake', '~> 10.0.3'
+  spec.add_development_dependency 'rdoc', '~> 4.0.0'
+  spec.add_development_dependency 'rspec', '~> 2.13.0'
+  # spec.add_development_dependency 'vcr', '~> 2.4.0'
+  # spec.add_development_dependency 'webmock', '~> 1.9.3'
+  spec.add_development_dependency 'pry', '~> 0.9.12'
+  spec.add_development_dependency 'pry-nav', '~> 0.2.3'
+  spec.add_development_dependency 'awesome_print', '~> 1.1.0'
+  spec.add_development_dependency 'simplecov', '~> 0.7.1'
+  spec.add_development_dependency 'coveralls', '~> 0.6.3'
 end
