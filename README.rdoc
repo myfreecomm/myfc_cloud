@@ -2,3 +2,5 @@
 
 Command line application to deploy and manage webapps on Amazon Web Services.
 
+{<img src="https://travis-ci.org/myfreecomm/myfc_cloud.png?branch=master" alt="Build Status" />}[https://travis-ci.org/myfreecomm/myfc_cloud]
+{<img src="https://coveralls.io/repos/myfreecomm/myfc_cloud/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/myfreecomm/myfc_cloud]
