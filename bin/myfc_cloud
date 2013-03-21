@@ -26,13 +26,13 @@ program_desc 'Command line application to deploy and manage webapps on Amazon We
 version MyfcCloud::VERSION
 
 desc 'Targets the sandbox environment (default)'
-switch [:S,:sandbox]
+switch [:S,:sandbox], :negatable => false
 
 desc 'Targets the production environment'
-switch [:P,:production]
+switch [:P,:production], :negatable => false
 
 desc 'Targets the stage environment'
-switch [:T,:stage]
+switch [:T,:stage], :negatable => false
 
 desc 'Path to the configuration file'
 default_value File.join(File.expand_path('..', File.dirname(__FILE__)), 'myfc_cloud.yml') # TODO how to find it via gem?

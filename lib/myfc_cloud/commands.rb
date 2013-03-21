@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-require File.join(File.dirname(__FILE__), "commands/check")
-require File.join(File.dirname(__FILE__), "commands/deploy")
-require File.join(File.dirname(__FILE__), "commands/scaling_group")
+require "myfc_cloud/commands/check"
+require "myfc_cloud/commands/deploy"
+require "myfc_cloud/commands/scaling_group"
 
 module MyfcCloud
   module Commands

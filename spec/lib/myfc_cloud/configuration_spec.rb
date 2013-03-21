@@ -12,7 +12,7 @@ describe MyfcCloud::Configuration do
         configuration = described_class.new(config_file_path) # default to sandbox environment
       }.not_to raise_error
 
-      configuration.config.instance_variable_get(:@table).should == {
+      configuration.instance_variable_get(:@config).instance_variable_get(:@table).should == {
         :access_key_id => 'SANDBOX_ACCESS_KEY_ID',
         :secret_access_key => 'SANDBOX_SECRET_ACCESS_KEY',
         :auto_scaling_group_name => 'sandbox_asg',
@@ -27,7 +27,7 @@ describe MyfcCloud::Configuration do
         configuration = described_class.new(config_file_path, :production)
       }.not_to raise_error
 
-      configuration.config.instance_variable_get(:@table).should == {
+      configuration.instance_variable_get(:@config).instance_variable_get(:@table).should == {
         :access_key_id => 'PRODUCTION_ACCESS_KEY_ID',
         :secret_access_key => 'PRODUCTION_SECRET_ACCESS_KEY',
         :auto_scaling_group_name => 'production_asg',
