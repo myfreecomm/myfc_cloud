@@ -6,6 +6,8 @@ Command line application to deploy and manage webapps on Amazon Web Services.
 {<img src="https://coveralls.io/repos/myfreecomm/myfc_cloud/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/myfreecomm/myfc_cloud]
 {<img src="https://codeclimate.com/github/myfreecomm/myfc_cloud.png" alt="Code Climate Status" />}[https://codeclimate.com/github/myfreecomm/myfc_cloud]
 
+RDoc documentation: http://rubydoc.info/github/myfreecomm/myfc_cloud
+
 == Installation
 
   $ gem install myfc_cloud
