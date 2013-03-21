@@ -19,7 +19,7 @@ require 'gli'
 require 'myfc_cloud'
 require 'pp'
 
-include GLI
+include GLI::App
 
 program_desc 'Command line application to deploy and manage webapps on Amazon Web Services'
 
@@ -35,7 +35,7 @@ desc 'Targets the stage environment'
 switch [:T,:stage]
 
 desc 'Path to the configuration file'
-default_value File.join(File.expand_path('..', File.dirname(__FILE__)), 'myfc_cloud.yml')
+default_value File.join(File.expand_path('..', File.dirname(__FILE__)), 'myfc_cloud.yml') # TODO how to find it via gem?
 arg_name 'PATH_TO_CONFIG_FILE'
 flag [:C,:config_file]
 
@@ -158,4 +158,4 @@ on_error do |exception|
   true
 end
 
-exit GLI.run(ARGV)
+exit run(ARGV)
