@@ -40,7 +40,7 @@ desc 'Targets the stage environment'
 switch [:T,:stage], :negatable => false
 
 desc 'Path to the configuration file'
-default_value File.join(File.expand_path('..', File.dirname(__FILE__)), 'myfc_cloud.yml') # TODO how to find it via gem?
+default_value File.join(Dir.pwd, 'myfc_cloud.yml')
 arg_name 'PATH_TO_CONFIG_FILE'
 flag [:C,:config_file]
 
