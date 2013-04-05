@@ -1,9 +1,10 @@
 # encoding: utf-8
 require 'aws'
 
-require "myfc_cloud/commands"
-require "myfc_cloud/configuration"
 require "myfc_cloud/version"
+require "myfc_cloud/configuration"
+require "myfc_cloud/helpers"
+require "myfc_cloud/commands"
 
 module MyfcCloud # :nodoc:
 end
